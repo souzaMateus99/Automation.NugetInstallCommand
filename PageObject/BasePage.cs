@@ -23,8 +23,8 @@ namespace PageObject
         }
 
         protected BasePage(Uri url, WebPage page){
-            this.browser = page.Browser;
             this.page = page.Browser.NavigateToPage(url);
+            this.browser = this.page.Browser;
         }
 
         public abstract BasePage Submit();
