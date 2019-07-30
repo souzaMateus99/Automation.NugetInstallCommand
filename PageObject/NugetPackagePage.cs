@@ -11,12 +11,7 @@ namespace PageObject
 {
     public class NugetPackagePage : BasePage
     {
-        private WebPage _page { get; }
-
-
-        public NugetPackagePage(WebPage webPage) : base(webPage.Browser){
-            _page = webPage;
-        }
+        public NugetPackagePage(Uri url, WebPage webPage) : base(url, webPage){}
 
         public override BasePage Submit(){
             return this;
@@ -27,7 +22,7 @@ namespace PageObject
         }
 
         private string GetTextToInstallPackage(){
-            IEnumerable<HtmlNode> packageInstallText = _page.Find("pre", By.Id("package-manager-text"));
+            IEnumerable<HtmlNode> packageInstallText = page.Find("pre", By.Id("package-manager-text"));
 
             if(packageInstallText.Count() > 0){
                 return packageInstallText.FirstOrDefault().InnerHtml;
