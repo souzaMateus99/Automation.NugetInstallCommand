@@ -20,12 +20,14 @@ namespace PageObject
         }
 
         private string GetNugetEnterPackageLink(){
-            IEnumerable<HtmlNode> links = page.Find("a", By.Class("package-title"));
+            string tag = "a";
+            
+            IEnumerable<HtmlNode> links = page.Find(tag, By.Class("package-title"));
 
             if(links.Count() > 0){
-                return links.Select(tag => tag.Attributes["href"].Value.Replace("/packages", string.Empty)).FirstOrDefault();
+                return links.Select(node => node.Attributes["href"].Value.Replace("/packages", string.Empty)).FirstOrDefault();
             }else{
-                throw new Exception();
+                throw new NodeNotFoundException($"Não foi possível encontrar a tag {tag}");
             }
         }
     }
