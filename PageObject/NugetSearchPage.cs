@@ -13,8 +13,7 @@ namespace PageObject
         public NugetSearchPage(WebPage webPage) : base(webPage){}
 
         public override BasePage Submit(){
-            string finalLink = GetNugetEnterPackageLink();
-            string packageLink = string.Concat(browser.Referer, finalLink);
+            string packageLink = string.Concat(browser.Referer, GetNugetEnterPackageLink());
             
             return new NugetPackagePage(new Uri(packageLink), page);
         }
