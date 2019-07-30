@@ -22,12 +22,14 @@ namespace PageObject
         }
 
         private string GetTextToInstallPackage(){
-            IEnumerable<HtmlNode> packageInstallText = page.Find("pre", By.Id("package-manager-text"));
+            string tag = "pre";
+            
+            IEnumerable<HtmlNode> packageInstallText = page.Find(tag, By.Id("package-manager-text"));
 
             if(packageInstallText.Count() > 0){
                 return packageInstallText.FirstOrDefault().InnerHtml;
             }else{
-                throw new Exception();
+                throw new NodeNotFoundException($"Não foi possível encontrar a tag {tag}");
             }
         }
     }
