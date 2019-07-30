@@ -2,7 +2,14 @@
 
 namespace DTO
 {
-    public class Class1
+    public class PackageDTO
     {
+        public string Text { get; }
+
+        
+        public PackageDTO(){}
+        public PackageDTO(string text){
+            Text = text;
+        }
     }
 }
