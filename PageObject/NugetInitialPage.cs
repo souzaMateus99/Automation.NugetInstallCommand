@@ -10,7 +10,7 @@ namespace PageObject
         private string _contentSearch { get; }
         
         
-        public NugetInitialPage(string contentSearch) : base("https://www.nuget.org"){
+        public NugetInitialPage(string contentSearch) : base(){
             _contentSearch = contentSearch;
         }
 

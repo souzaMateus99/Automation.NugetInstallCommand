@@ -9,12 +9,11 @@ namespace PageObject
     {
         protected ScrapingBrowser browser;
         protected WebPage page;
-        protected string PrincipalUrl { get; }
+        protected const string PRINCIPAL_URL = "https://www.nuget.org";
 
-        protected BasePage(string url){
+        protected BasePage(){
             browser = new ScrapingBrowser();
-            page = browser.NavigateToPage(new Uri(url));
-            PrincipalUrl = url;
+            page = browser.NavigateToPage(new Uri(PRINCIPAL_URL));
         }
 
         protected BasePage(WebPage page){
