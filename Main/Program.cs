@@ -1,5 +1,6 @@
 ﻿using DTO;
 using System;
+using Service;
 using PageObject;
 
 
@@ -10,18 +11,25 @@ namespace Main
         static void Main(string[] args)
         {
             Console.WriteLine("Escreva o pacote que deseja buscar:");
-            string packageSearch = Console.ReadLine();
+            PackageDTO packageDto = new PackageDTO(Console.ReadLine());
+
+            Console.WriteLine("Escreva o caminho do projeto que deseja colocar o pacote: (Se não escrever nada, o pacote será exibido na tela)");
+            string projectPath = Console.ReadLine();
 
             try{
-                BasePage initialPage = new NugetInitialPage(packageSearch);
+                BasePage initialPage = new NugetInitialPage(packageDto.Package);
                 
                 BasePage searchPage = initialPage.Submit();
 
                 BasePage packagePage = searchPage.Submit();
 
-                PackageDTO packageDto = packagePage.GetPackageDTO();
+                packageDto.TextToInstall = searchPage.ExtractInformationOfPage();
 
-                Console.WriteLine(packageDto.Text);
+                if(string.IsNullOrEmpty(projectPath)){
+                    Console.WriteLine(packageDto.TextToInstall);
+                }else{
+                    new PackageService().AddProjectReference(packageDto, projectPath);
+                }
             }catch(HtmlAgilityPack.NodeNotFoundException e){
                 Console.WriteLine("Ocorreu um erro no programa:");
                 Console.WriteLine("StackTrace:");

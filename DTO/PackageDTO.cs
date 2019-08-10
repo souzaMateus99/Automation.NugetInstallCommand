@@ -4,12 +4,12 @@ namespace DTO
 {
     public class PackageDTO
     {
-        public string Text { get; }
+        public string Package { get; }
+        public string TextToInstall { get; set; }
 
-        
-        public PackageDTO(){}
-        public PackageDTO(string text){
-            Text = text;
+
+        public PackageDTO(string package){
+            Package = package;
         }
     }
 }

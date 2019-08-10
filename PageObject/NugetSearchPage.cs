@@ -10,11 +10,15 @@ namespace PageObject
 {
     public class NugetSearchPage : BasePage
     {
-        public NugetSearchPage(WebPage webPage) : base(webPage){}
+        private string packageLink { get; }
+        
 
-        public override BasePage Submit(){
-            string packageLink = string.Concat(browser.Referer, GetNugetEnterPackageLink());
-            
+        public NugetSearchPage(WebPage webPage) : base(webPage){
+            packageLink = string.Concat(browser.Referer, GetNugetEnterPackageLink());
+        }
+        
+
+        public override BasePage Submit(){            
             return new NugetPackagePage(new Uri(packageLink), page);
         }
 
