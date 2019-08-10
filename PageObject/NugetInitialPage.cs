@@ -7,23 +7,22 @@ namespace PageObject
 {
     public class NugetInitialPage : BasePage
     {
-        private string _contentSearch { get; }
+        private PageWebForm _pageWebForm { get; }
         
         
         public NugetInitialPage(string contentSearch) : base(){
-            _contentSearch = contentSearch;
+            _pageWebForm = GetPageWebForm(contentSearch);
         }
+        
 
         public override BasePage Submit(){
-            PageWebForm pageForm = GetPageWebForm();
-
-            return new NugetSearchPage(pageForm.Submit());
+            return new NugetSearchPage(_pageWebForm.Submit());
         }
 
-        private PageWebForm GetPageWebForm(){
+        private PageWebForm GetPageWebForm(string contentSearch){
             PageWebForm pageWebForm = new PageWebForm(page.Html, browser);
 
-            pageWebForm["q"] = _contentSearch;
+            pageWebForm["q"] = contentSearch;
             pageWebForm.Action = "packages";
             pageWebForm.Method = HttpVerb.Get;
 

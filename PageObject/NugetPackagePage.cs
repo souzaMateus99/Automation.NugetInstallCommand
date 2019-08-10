@@ -11,14 +11,19 @@ namespace PageObject
 {
     public class NugetPackagePage : BasePage
     {
-        public NugetPackagePage(Uri url, WebPage webPage) : base(url, webPage){}
+        private string _packageInstallText { get; }
+        
+        public NugetPackagePage(Uri url, WebPage webPage) : base(url, webPage){
+            _packageInstallText = GetTextToInstallPackage();
+        }
+
 
         public override BasePage Submit(){
             return this;
         }
 
-        public override PackageDTO GetPackageDTO(){
-            return new PackageDTO(GetTextToInstallPackage());
+        public override string ExtractInformationOfPage(){
+            return _packageInstallText;
         }
 
         private string GetTextToInstallPackage(){

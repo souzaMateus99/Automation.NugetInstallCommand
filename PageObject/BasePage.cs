@@ -28,8 +28,8 @@ namespace PageObject
 
         public abstract BasePage Submit();
 
-        public virtual PackageDTO GetPackageDTO(){
-            return new PackageDTO();
+        public virtual string ExtractInformationOfPage(){
+            throw new NotImplementedException("O método não foi utlizado nessa página");
         }
     }
 }
