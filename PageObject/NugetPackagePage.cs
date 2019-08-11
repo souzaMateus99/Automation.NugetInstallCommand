@@ -1,11 +1,10 @@
-using DTO;
 using System;
+using System.Web;
 using System.Linq;
 using HtmlAgilityPack;
 using ScrapySharp.Html;
 using ScrapySharp.Network;
 using System.Collections.Generic;
-
 
 namespace PageObject
 {
@@ -29,10 +28,10 @@ namespace PageObject
         private string GetTextToInstallPackage(){
             string tag = "pre";
             
-            IEnumerable<HtmlNode> packageInstallText = page.Find(tag, By.Id("package-manager-text"));
+            IEnumerable<HtmlNode> packageInstallText = page.Find(tag, By.Id("package-reference-text"));
 
             if(packageInstallText.Count() > 0){
-                return packageInstallText.FirstOrDefault().InnerHtml;
+                return HttpUtility.HtmlDecode(packageInstallText.FirstOrDefault().InnerHtml);
             }else{
                 throw new NodeNotFoundException($"Não foi possível encontrar a tag {tag}");
             }
