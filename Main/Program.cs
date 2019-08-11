@@ -12,8 +12,8 @@ namespace Main
         {
             Console.WriteLine("Escreva o pacote que deseja buscar:");
             PackageDTO packageDto = new PackageDTO(Console.ReadLine());
-
-            Console.WriteLine("Escreva o caminho do projeto que deseja colocar o pacote: (Se não escrever nada, o pacote será exibido na tela)");
+            Console.WriteLine("Escreva o caminho do projeto que deseja colocar o pacote:");
+            Console.WriteLine("(Caso não escreva nada, o texto para instalação do pacote será exibido na tela)");
             string projectPath = Console.ReadLine();
 
             try{
@@ -23,19 +23,21 @@ namespace Main
 
                 BasePage packagePage = searchPage.Submit();
 
-                packageDto.TextToInstall = searchPage.ExtractInformationOfPage();
+                packageDto.TextToInstall = packagePage.ExtractInformationOfPage();
 
                 if(string.IsNullOrEmpty(projectPath)){
                     Console.WriteLine(packageDto.TextToInstall);
                 }else{
-                    new PackageService().AddProjectReference(packageDto, projectPath);
+                    new PackageService(packageDto).AddProjectReference(projectPath);
                 }
             }catch(HtmlAgilityPack.NodeNotFoundException e){
-                Console.WriteLine("Ocorreu um erro no programa:");
                 Console.WriteLine("StackTrace:");
                 Console.WriteLine(e.StackTrace);
                 Console.WriteLine("Mensagem:");
                 Console.WriteLine(e.Message);
+            }catch(NotImplementedException e){
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
             }
         }
     }
