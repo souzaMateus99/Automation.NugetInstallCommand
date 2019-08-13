@@ -28,7 +28,7 @@ namespace PageObject
         public abstract BasePage Submit();
 
         public virtual string ExtractInformationOfPage(){
-            throw new NotImplementedException("O método não foi utlizado nessa página");
+            return page.Content;
         }
     }
 }
