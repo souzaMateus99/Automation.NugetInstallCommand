@@ -23,7 +23,7 @@ namespace Main
 
                 BasePage packagePage = searchPage.Submit();
 
-                packageDto.TextToInstall = packagePage.ExtractInformationOfPage();
+                packageDto.TextToInstall = packagePage.ExtractContentOfPage();
 
                 if(string.IsNullOrEmpty(projectPath)){
                     Console.WriteLine(packageDto.TextToInstall);
@@ -35,9 +35,6 @@ namespace Main
                 Console.WriteLine(e.StackTrace);
                 Console.WriteLine("Mensagem:");
                 Console.WriteLine(e.Message);
-            }catch(NotImplementedException e){
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
             }
         }
     }

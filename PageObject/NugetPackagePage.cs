@@ -21,7 +21,7 @@ namespace PageObject
             return this;
         }
 
-        public override string ExtractInformationOfPage(){
+        public override string ExtractContentOfPage(){
             return _packageInstallText;
         }
 

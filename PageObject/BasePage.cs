@@ -27,7 +27,7 @@ namespace PageObject
 
         public abstract BasePage Submit();
 
-        public virtual string ExtractInformationOfPage(){
+        public virtual string ExtractContentOfPage(){
             return page.Content;
         }
     }
