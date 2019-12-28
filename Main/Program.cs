@@ -2,7 +2,7 @@
 using System;
 using Service;
 using PageObject;
-
+using PageObject.Interfaces;
 
 namespace Main
 {
@@ -11,17 +11,20 @@ namespace Main
         static void Main(string[] args)
         {
             Console.WriteLine("Escreva o pacote que deseja buscar:");
-            PackageDTO packageDto = new PackageDTO(Console.ReadLine());
+            
+            var packageDto = new PackageDTO(Console.ReadLine());
+
             Console.WriteLine("Escreva o caminho do projeto que deseja colocar o pacote:");
             Console.WriteLine("(Caso não escreva nada, o texto para instalação do pacote será exibido na tela)");
+            
             string projectPath = Console.ReadLine();
 
             try{
-                BasePage initialPage = new NugetInitialPage(packageDto.Package);
+                IPage initialPage = new NugetInitialPage(packageDto.Package);
                 
-                BasePage searchPage = initialPage.Submit();
+                IPage searchPage = initialPage.Submit();
 
-                BasePage packagePage = searchPage.Submit();
+                IPage packagePage = searchPage.Submit();
 
                 packageDto.TextToInstall = packagePage.ExtractContentOfPage();
 

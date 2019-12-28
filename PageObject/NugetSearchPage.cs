@@ -3,8 +3,7 @@ using System.Linq;
 using HtmlAgilityPack;
 using ScrapySharp.Html;
 using ScrapySharp.Network;
-using System.Collections.Generic;
-
+using PageObject.Interfaces;
 
 namespace PageObject
 {
@@ -18,20 +17,31 @@ namespace PageObject
         }
         
 
-        public override BasePage Submit(){            
+        public override IPage Submit(){            
             return new NugetPackagePage(new Uri(packageLink), page);
         }
 
         private string GetNugetEnterPackageLink(){
-            string tag = "a";
-            
-            IEnumerable<HtmlNode> links = page.Find(tag, By.Class("package-title"));
+            var tag = "a";
+            var tagClass = "package-title";
 
-            if(links.Count() > 0){
-                return links.Select(node => node.Attributes["href"].Value.Replace("/packages", string.Empty)).FirstOrDefault();
+            var links = page.Find(tag, By.Class(tagClass));
+
+            if(links.Any()){
+                return links
+                        .Select(node => ClearLinkText(node.Attributes["href"].Value))
+                        .FirstOrDefault();
             }else{
                 throw new NodeNotFoundException($"Não foi possível encontrar a tag {tag}");
             }
+        }
+
+        private string ClearLinkText(string link){
+            return link.Replace("/packages", string.Empty);
+        }
+
+        public override string ExtractContentOfPage(){
+            return page.Content;
         }
     }
 }
