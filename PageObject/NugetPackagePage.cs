@@ -4,7 +4,7 @@ using System.Linq;
 using HtmlAgilityPack;
 using ScrapySharp.Html;
 using ScrapySharp.Network;
-using System.Collections.Generic;
+using PageObject.Interfaces;
 
 namespace PageObject
 {
@@ -17,7 +17,7 @@ namespace PageObject
         }
 
 
-        public override BasePage Submit(){
+        public override IPage Submit(){
             return this;
         }
 
@@ -26,11 +26,12 @@ namespace PageObject
         }
 
         private string GetTextToInstallPackage(){
-            string tag = "pre";
+            var tag = "pre";
+            var tagId = "package-reference-text";
             
-            IEnumerable<HtmlNode> packageInstallText = page.Find(tag, By.Id("package-reference-text"));
+            var packageInstallText = page.Find(tag, By.Id(tagId));
 
-            if(packageInstallText.Count() > 0){
+            if(packageInstallText.Any()){
                 return HttpUtility.HtmlDecode(packageInstallText.FirstOrDefault().InnerHtml);
             }else{
                 throw new NodeNotFoundException($"Não foi possível encontrar a tag {tag}");

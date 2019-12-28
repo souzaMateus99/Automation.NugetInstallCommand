@@ -1,7 +1,6 @@
-﻿using System;
-using ScrapySharp.Network;
+﻿using ScrapySharp.Network;
+using PageObject.Interfaces;
 using ScrapySharp.Html.Forms;
-
 
 namespace PageObject
 {
@@ -15,18 +14,22 @@ namespace PageObject
         }
         
 
-        public override BasePage Submit(){
+        public override IPage Submit(){
             return new NugetSearchPage(_pageWebForm.Submit());
         }
 
         private PageWebForm GetPageWebForm(string contentSearch){
-            PageWebForm pageWebForm = new PageWebForm(page.Html, browser);
+            var pageWebForm = new PageWebForm(page.Html, browser);
 
             pageWebForm["q"] = contentSearch;
             pageWebForm.Action = "packages";
             pageWebForm.Method = HttpVerb.Get;
 
             return pageWebForm;
+        }
+
+        public override string ExtractContentOfPage(){
+            return page.Content;
         }
     }
 }

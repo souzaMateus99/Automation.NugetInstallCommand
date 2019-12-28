@@ -8,7 +8,7 @@ namespace Service
 {
     public class PackageService
     {
-        private PackageDTO _packageDto;
+        private PackageDTO _packageDto {get;}
 
 
         public PackageService(PackageDTO packageDto){
@@ -17,17 +17,17 @@ namespace Service
         
 
         public void AddProjectReference(string projectPath){
-            string projectFileContent = ReadFile(projectPath);
+            var projectFileContent = ReadFile(projectPath);
 
-            XmlDocument xml = new XmlDocument();
+            var xml = new XmlDocument();
             xml.LoadXml(projectFileContent);
 
-            XmlNodeList xmlNodeList = xml.SelectNodes("//ItemGroup //PackageReference");
+            var xmlNodeList = xml.SelectNodes("//ItemGroup //PackageReference");
 
-            string newContent = string.Empty;
+            var newContent = string.Empty;
 
             if(xmlNodeList.Count > 0){
-                XmlNode lastPackageNode = xmlNodeList.Item(xmlNodeList.Count - 1);
+                var lastPackageNode = xmlNodeList.Item(xmlNodeList.Count - 1);
 
                 newContent = projectFileContent.Replace(lastPackageNode.OuterXml, string.Concat(lastPackageNode.OuterXml, _packageDto.TextToInstall));
             }else{
@@ -38,10 +38,10 @@ namespace Service
         }
 
         private string ReadFile(string projectPath){
-            StringBuilder fileContent = new StringBuilder();
+            var fileContent = new StringBuilder();
             
-            using(FileStream fileStream = OpenFile(projectPath))
-            using(StreamReader streamReader = new StreamReader(fileStream)){
+            using(var fileStream = OpenFile(projectPath))
+            using(var streamReader = new StreamReader(fileStream)){
                 fileContent.Append(streamReader.ReadLine());
                 
                 while(streamReader.Read() != -1){
@@ -53,8 +53,8 @@ namespace Service
         }
 
         private void WriteFile(string projectPath, string text){
-            using(FileStream fileStream = OpenFile(projectPath))
-            using(StreamWriter streamWriter = new StreamWriter(fileStream)){
+            using(var fileStream = OpenFile(projectPath))
+            using(var streamWriter = new StreamWriter(fileStream)){
                 streamWriter.Write(text);
                 streamWriter.Flush();
             }

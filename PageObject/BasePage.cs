@@ -1,10 +1,11 @@
 using System;
 using ScrapySharp.Network;
+using PageObject.Interfaces;
 
 
 namespace PageObject
 {
-    public abstract class BasePage
+    public abstract class BasePage : IPage
     {
         protected ScrapingBrowser browser;
         protected WebPage page;
@@ -25,10 +26,7 @@ namespace PageObject
             this.browser = this.page.Browser;
         }
 
-        public abstract BasePage Submit();
-
-        public virtual string ExtractContentOfPage(){
-            return page.Content;
-        }
+        public abstract IPage Submit();
+        public abstract string ExtractContentOfPage();
     }
 }
